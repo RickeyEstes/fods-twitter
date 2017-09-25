@@ -1,0 +1,85 @@
+<div flex class="tw-map">
+  <leaflet flex class="tw-leaflet" callback="map"></leaflet>
+</div>
+
+<div flex layout="column" class="tw-data">
+  <md-content>
+    <div layout="row" class="tw-header" layout-padding>
+      <div class="tw-header-text">
+        <span>
+          {{ selectedState.name }}
+        </span>
+      </div>
+    </div>
+
+    <div flex class="tw-content" layout-padding>
+
+      <div layout="row" class="tw-legend">
+        <div flex="33" layout="row" layout-align="start center">
+          <span class="tw-legend-block blue"></span> Clinton
+        </div>
+        <div flex="33" layout="row" layout-align="start center">
+          <span class="tw-legend-block red"></span>Trump
+        </div>
+        <div flex="33" layout="row" layout-align="start center">
+          <span class="tw-legend-block grey"></span>Neutral
+        </div>
+      </div>
+
+      <div class="tw-segment" layout="column">
+        <div class="tw-segment-header">
+          <div class="tw-segment-header-text">
+            <span>
+              Most used hashtags
+            </span>
+          </div>
+        </div>
+
+        <div flex ng-show="fetchingHashtags" class="tw-segment-content" layout="column" layout-align="center center">
+           <md-progress-circular md-diameter="30px"></md-progress-circular>
+           <md-subheader>Fetching most used hashtags</md-subheader>
+        </div>
+
+        <div ng-show="!fetchingHashtags" class="tw-segment-content" layout="column">
+          <md-list class="md-dense tw-segment-list">
+            <md-list-item class="md-2-line" ng-repeat="hashtag in hashtags">
+              <div class="md-list-item-text">
+                <h3 class="tw-segment-list-hashtag">{{ hashtag._id }}</h3>
+                <span class="tw-segment-list-count">{{ hashtag.count }}</span>
+              </div>
+            </md-list-item>
+          </md-list>
+        </div>
+      </div>
+
+      <div class="tw-segment" layout="column">
+        <div class="tw-segment-header">
+          <div class="tw-segment-header-text">
+            <span>
+              Candidate preference based on hashtags
+            </span>
+          </div>
+        </div>
+
+        <div flex ng-show="fetchingPreference" class="tw-segment-content" layout="column" layout-align="center center">
+           <md-progress-circular md-diameter="30px"></md-progress-circular>
+           <md-subheader>Fetching candidate preference based on hashtags</md-subheader>
+        </div>
+
+        <!-- <div ng-show="!fetchingPreference" class="tw-segment-content" layout="column">
+          <md-list class="md-dense tw-segment-list">
+            <md-list-item class="md-2-line" ng-repeat="preference in preferences">
+              <div class="md-list-item-text">
+                <h3 class="tw-segment-list-hashtag">{{ preference._id }}</h3>
+                <span class="tw-segment-list-count">{{ preference.count }}</span>
+              </div>
+            </md-list-item>
+          </md-list>
+        </div> -->
+
+        <div ng-if="!fetchingPreference" class="tw-segment-histogram" histogram data="preferences"></div>
+      </div>
+
+    </div>
+	</md-content>
+</div>

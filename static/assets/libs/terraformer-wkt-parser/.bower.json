@@ -1,0 +1,25 @@
+{
+  "name": "terraformer-wkt-parser",
+  "main": "terraformer-wkt-parser.min.js",
+  "ignore": [
+    "versions",
+    "spec",
+    "examples",
+    "test"
+  ],
+  "dependencies": {
+    "terraformer": "~1.0.5"
+  },
+  "homepage": "https://github.com/Esri/terraformer-wkt-parser",
+  "version": "1.1.2",
+  "_release": "1.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.2",
+    "commit": "aa830f2a0b7376a7ac510b15a05701f64299efb7"
+  },
+  "_source": "https://github.com/Esri/terraformer-wkt-parser.git",
+  "_target": "^1.1.2",
+  "_originalSource": "terraformer-wkt-parser",
+  "_direct": true
+}
