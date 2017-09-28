@@ -41,10 +41,10 @@
         </div>
 
         <div ng-show="!fetchingHashtags" class="tw-segment-content" layout="column">
-          <md-list class="md-dense tw-segment-list">
+          <md-list class="md-dense tw-segment-list columns">
             <md-list-item class="md-2-line" ng-repeat="hashtag in hashtags">
               <div class="md-list-item-text">
-                <h3 class="tw-segment-list-hashtag">{{ hashtag._id }}</h3>
+                <h3 class="tw-segment-list-hashtag" ng-class="getCandidate(hashtag._id)">{{ hashtag._id }}</h3>
                 <span class="tw-segment-list-count">{{ hashtag.count }}</span>
               </div>
             </md-list-item>
@@ -60,25 +60,130 @@
             </span>
           </div>
         </div>
+        <div class="tw-segment-header" layout="row">
+          <span class="tw-segment-header-button" ng-click="showPreference()">
+            <span>
+              Show national preference on map
+            </span>
+          </span>
+        </div>
 
         <div flex ng-show="fetchingPreference" class="tw-segment-content" layout="column" layout-align="center center">
            <md-progress-circular md-diameter="30px"></md-progress-circular>
            <md-subheader>Fetching candidate preference based on hashtags</md-subheader>
         </div>
 
-        <!-- <div ng-show="!fetchingPreference" class="tw-segment-content" layout="column">
-          <md-list class="md-dense tw-segment-list">
-            <md-list-item class="md-2-line" ng-repeat="preference in preferences">
-              <div class="md-list-item-text">
-                <h3 class="tw-segment-list-hashtag">{{ preference._id }}</h3>
-                <span class="tw-segment-list-count">{{ preference.count }}</span>
-              </div>
-            </md-list-item>
-          </md-list>
-        </div> -->
-
-        <div ng-if="!fetchingPreference" class="tw-segment-histogram" histogram data="preferences"></div>
+        <div ng-if="!fetchingPreference" class="tw-segment-histogram" histogram theme="candidate" data="preferences" zero="false"></div>
       </div>
+
+      <div class="tw-segment" layout="column">
+        <div class="tw-segment-header">
+          <div class="tw-segment-header-text">
+            <span>
+              Sentiment by tweets
+            </span>
+          </div>
+        </div>
+
+        <div class="tw-segment-header" layout="column">
+          <span class="tw-segment-header-button" ng-click="showSentiment('sentOverall')">
+            <span>
+              Show overall sentiment by state on map
+            </span>
+          </span>
+
+          <span class="tw-segment-header-button" ng-click="showSentiment('sentTrump')">
+            <span>
+              Show Trump sentiment by state on map
+            </span>
+          </span>
+
+          <span class="tw-segment-header-button" ng-click="showSentiment('sentClinton')">
+            <span>
+              Show Clinton sentiment by state on map
+            </span>
+          </span>
+        </div>
+
+        <div flex ng-show="fetchingSentiment" class="tw-segment-content" layout="column" layout-align="center center">
+           <md-progress-circular md-diameter="30px"></md-progress-circular>
+           <md-subheader>Fetching sentiment</md-subheader>
+        </div>
+
+        <div ng-if="!fetchingSentiment" class="tw-segment-histogram" histogram data="sentiment" zero="true"></div>
+      </div>
+
+      <div class="tw-segment" layout="column" ng-if="selectedState.name != 'United States'">
+        <div class="tw-segment-header">
+          <div class="tw-segment-header-text">
+            <span>
+              Topics by state
+            </span>
+          </div>
+        </div>
+
+        <div class="tw-segment-header" layout="column">
+          <span class="tw-segment-header-button" ng-click="showTopics = 'overall'">
+            <span>
+              Show overall topics
+            </span>
+          </span>
+
+          <span class="tw-segment-header-button" ng-click="showTopics = 'trump'">
+            <span>
+              Show Trump topics
+            </span>
+          </span>
+
+          <span class="tw-segment-header-button" ng-click="showTopics = 'clinton'">
+            <span>
+              Show Clinton topics
+            </span>
+          </span>
+
+          <div class="tw-segment-header-text-small">
+            <span>
+              {{ showTopics }}
+            </span>
+          </div>
+        </div>
+
+        <md-list class="md-dense tw-segment-list">
+          <md-list-item class="md-2-line" ng-if="showTopics == 'overall'" ng-repeat="topic in selectedState.topics.total">
+            <div class="md-list-item-text">
+              <h3 class="tw-segment-list-hashtag">Topic {{ $index + 1 }}</h3>
+              <span class="tw-segment-list-count" layout="row">
+                <span ng-repeat="words in topic track by $index">
+                  <span class="tw-segment-list-key" ng-repeat="(key, value) in words">{{ key }} </span>
+                </span>
+              </span>
+            </div>
+          </md-list-item>
+
+          <md-list-item class="md-2-line" ng-if="showTopics == 'trump'" ng-repeat="topic in selectedState.topics.trump">
+            <div class="md-list-item-text">
+              <h3 class="tw-segment-list-hashtag">Topic {{ $index + 1 }}</h3>
+              <span class="tw-segment-list-count" layout="row">
+                <span ng-repeat="words in topic track by $index">
+                  <span class="tw-segment-list-key" ng-repeat="(key, value) in words">{{ key }} </span>
+                </span>
+              </span>
+            </div>
+          </md-list-item>
+
+          <md-list-item class="md-2-line" ng-if="showTopics == 'clinton'" ng-repeat="topic in selectedState.topics.clinton">
+            <div class="md-list-item-text">
+              <h3 class="tw-segment-list-hashtag">Topic {{ $index + 1 }}</h3>
+              <span class="tw-segment-list-count" layout="row">
+                <span ng-repeat="words in topic track by $index">
+                  <span class="tw-segment-list-key" ng-repeat="(key, value) in words">{{ key }} </span>
+                </span>
+              </span>
+            </div>
+          </md-list-item>
+        </md-list>
+      </div>
+
 
     </div>
 	</md-content>

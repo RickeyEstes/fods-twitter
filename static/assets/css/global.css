@@ -80,6 +80,37 @@ body, html {
   border-bottom: 2px solid rgb(22, 160, 133);
 }
 
+.tw-segment-header-text-small {
+  margin-top: 20px;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+
+.tw-segment-header-text-small span {
+  padding-right: 20px;
+  border-bottom: 2px solid rgb(22, 160, 133);
+}
+
+
+.tw-segment-header-button {
+  color: rgb(127, 140, 141);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+
+  cursor: pointer;
+}
+
+.tw-segment-header-button:hover {
+  color: rgb(22, 160, 133);
+}
+
+.tw-segment-header-button span {
+  padding-right: 20px;
+  border-bottom: 1px solid rgb(22, 160, 133);
+}
+
 .tw-segment-content {
   height: 100%;
 }
@@ -88,17 +119,13 @@ body, html {
   stroke: rgb(22, 160, 133);
 }
 
-.tw-segment-list {
+.tw-segment-list.columns {
   padding: 0px;
   /*list-style-type: decimal;*/
   list-style-position: inside;
   -webkit-columns: 3;
      -moz-columns: 3;
           columns: 3;
-}
-
-.tw-segment-list li {
-
 }
 
 .tw-segment-list md-list-item {
@@ -109,11 +136,24 @@ body, html {
 
 .tw-segment-list-hashtag {
   font-size: 15px !important;
+  color: rgb(127, 140, 141) !important;
+}
+
+.tw-segment-list-hashtag-hillary {
+  color: rgb(41, 128, 185) !important;
+}
+
+.tw-segment-list-hashtag-trump {
+  color: rgb(192, 57, 43) !important;
 }
 
 .tw-segment-list-count {
   font-size: 13px;
   color: rgb(22, 160, 133);
+}
+
+.tw-segment-list-key {
+  margin-right: 10px;
 }
 
 .tw-segment-histogram {
@@ -134,4 +174,12 @@ body, html {
 }
 .bar{
   fill: rgb(22, 160, 133);
+}
+
+.bar-hillary {
+  fill: rgb(41, 128, 185);
+}
+
+.bar-trump {
+  fill: rgb(192, 57, 43);
 }

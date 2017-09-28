@@ -46,5 +46,21 @@ angular.module('app.services')
       });
   };
 
+  factory.getAllSentiment = function() {
+    return $http
+      .get('/api/getSentiment')
+      .then(function(response) {
+        return response.data.result;
+      });
+  };
+
+  factory.getSentiment = function(state) {
+    return $http
+      .get('/api/getSentiment/' + state)
+      .then(function(response) {
+        return response.data.result;
+      });
+  };
+
   return factory;
 });

@@ -4,11 +4,12 @@ angular.module('app.directives')
   return {
     restrict: 'EA',
     scope: {
-      data: '='
+      data: '=',
+      zero: '=',
+      theme: '='
     },
     link: function(scope, element, attrs) {
       d3Service.d3().then(function(d3) {
-
         // Set margins
         var margin = { top: 20, right: 20, bottom: 20, left: 50 };
         var width = parseInt(d3.select('.tw-segment-histogram').style('width'), 10) - margin.left - margin.right;
@@ -71,20 +72,28 @@ angular.module('app.directives')
             d._id = +d._id;
             d.count = +d.count;
           });
-          data = data.filter(function(d) {
-            console.log(d._id);
-            if (d._id != 0) {
-              return true
-            } else {
-              return false
-            }
-          })
 
           var scale = []
           for (var i = -5; i <= 5; i++) {
-            if (i != 0) {
-              scale.push(i)
-            }
+            scale.push(i)
+          }
+
+          if (scope.zero == false) {
+            data = data.filter(function(d) {
+              if (d._id != 0) {
+                return true
+              } else {
+                return false
+              }
+            });
+
+            scale = scale.filter(function(d) {
+              if (d != 0) {
+                return true
+              } else {
+                return false
+              }
+            });
           }
 
           x.domain(scale);
@@ -111,11 +120,21 @@ angular.module('app.directives')
             .style("text-anchor", "end")
             .text("Frequency");
 
-            // Add bar chart
+          // Add bar chart
           svg.selectAll("bar")
             .data(data)
           .enter().append("rect")
-            .attr("class", "bar")
+            .attr("class", function(d) {
+              if (attrs.theme == "candidate") {
+                if (d._id < 0) {
+                  return "bar-hillary"
+                } else if (d._id > 0) {
+                  return "bar-trump"
+                }
+              } else {
+                return "bar"
+              }
+            })
             .attr("x", function(d) { return x(d._id); })
             .attr("width", x.rangeBand())
             .attr("y", function(d) { return y(d.count); })
